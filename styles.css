@@ -26,9 +26,17 @@ h2{
 .h2-azul{
     display: none;
     top: -2.7em; 
-    left: 33.6em;
+    left: 23.2em;
     color: blue;
 }
+.h2-lightblue{
+    display: none;
+    color: lightblue;
+    top: -2.7em;
+    left: 43.7em;
+
+}
+
 
 .container{
     margin-top: 5em;
@@ -61,14 +69,47 @@ h2{
     border:  5px solid blue;
 }
 
+.circulo{
+    border-radius: 50%;
+    
+    
+}
+
+.maior{
+    width: 200px;
+    height: 200px;
+    border: 5px solid lightblue;
+}
+
+
+
+
+
 .branco{
     top: 50%;
-    left: 70%;
+    left: 78%;
     background-color: white;
 }
 
 .azul{
     top: 50%;
-    left: 20%;
+    left: 11%;
     background-color: blue;
+}
+
+.menor{
+    position:absolute;
+    width: 180px;
+    height: 180px;
+    top: 50%;
+    left: 44%;
+    background-color: lightblue;
+}
+.menssagem-final{
+    display: none;
+    position: absolute;
+    bottom: 2em; 
+    left: 50%; 
+    transform: translateX(-50%); 
+
 }

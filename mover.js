@@ -1,7 +1,11 @@
-let quadrado = null;
-let arrastando = false;
-let offsetX, offsety;
-
+import { verificarCirculo } from "./VerificarCirculo.js";
+import { verificarCor } from "./VerificarCor.js";
+import { verificarPosicao } from "./verificarPosicao.js";
+ 
+ 
+ let quadrado,circulo = null;
+ let offsetX, offsety;
+ export let circu = false,quadA=false,quadB=false;
 
 document.addEventListener('mousedown',(evento) =>{
     if (evento.target.classList.contains('quadrado')) {
@@ -12,50 +16,49 @@ document.addEventListener('mousedown',(evento) =>{
         quadrado.style.cursor = 'grabbing';
       } 
 
+
+  if (evento.target.classList.contains('menor')){
+    circulo = evento.target;
+    offsetX = evento.clientX - circulo.offsetLeft;
+    offsety = evento.clientY - circulo.offsetTop;
+    circulo.style.cursor = 'grabbing';
+    console.log("clocou");
+  }
 });
 
+
 document.addEventListener('mouseup', () => {
+  console.log('Soltei o mouse');
     if (quadrado) {
-        const box = document.querySelector(".boxwhite");
-        const boxBlue = document.querySelector('.boxblue');
-        const quadradoBranco = document.querySelector('.branco');
-        const quadradoAzul = document.querySelector('.azul');
-
-        const boxsize = box.getBoundingClientRect();
-        const boxAzulSize = boxBlue.getBoundingClientRect();
-        const quadBrancoSize = quadradoBranco.getBoundingClientRect();
-        const quadAzulSize = quadradoAzul.getBoundingClientRect();
+      
+       if (quadrado.id === 'branco'){
+        let [boxsize, quadSize] = verificarCor(quadrado,circulo,quadA,quadB);
+        quadB = verificarPosicao(boxsize, quadSize, quadrado);
+       }
+       if (quadrado.id === 'azul'){
+        let [boxsize, quadSize] = verificarCor(quadrado,circulo,quadA,quadB);
+        quadA= verificarPosicao(boxsize, quadSize, quadrado);
+       }
         
-        
-
-        if (quadrado.id === 'branco'){
-
-            if(boxsize.top <= quadBrancoSize.top && 
-                boxsize.bottom >= quadBrancoSize.bottom && 
-                boxsize.left <= quadBrancoSize.left && 
-                boxsize.right >= quadBrancoSize.right) {
-                  const msgEntrou = document.querySelector('.h2-branco')
-                  msgEntrou.style.display = 'block';
-                  const container = document.querySelector('.container-texto-quadrado');
-                  container.appendChild(msgEntrou);
-                }
-        }
-        if (quadrado.id === 'azul'){
-            
-            if(boxAzulSize.top <= quadAzulSize.top && 
-                boxAzulSize.bottom >= quadAzulSize.bottom && 
-                boxAzulSize.left <= quadAzulSize.left && 
-                boxAzulSize.right >= quadAzulSize.right) {
-                  const msgEntrou = document.querySelector('.h2-azul')
-                  msgEntrou.style.display = 'block';
-                  const container = document.querySelector('.container-texto-quadrado');
-                  container.appendChild(msgEntrou);
-                }
-        }
+             
         quadrado.style.cursor = 'grab';
         quadrado = null;
 
         
+      }
+
+      if (circulo){
+        let [circboxsize,circSize] = verificarCor(quadrado,circulo,circu);
+        circu = verificarCirculo(circboxsize,circSize,circulo);
+
+        circulo.style.cursor = "grab";
+        circulo = null;
+      }
+      if(circu && quadA && quadB){
+        
+        const msgfinal = document.querySelector('.menssagem-final');
+        msgfinal.style.display = 'block';
+        console.log("Era prafuncionar")
       }
 
   });
@@ -66,9 +69,12 @@ document.addEventListener('mouseup', () => {
 
     if (quadrado) {
       quadrado.style.left = (evento.clientX - offsetX) + 'px';
-      quadrado.style.top = (evento.clientY - offsety) + 'px';
-         
-
+      quadrado.style.top = (evento.clientY - offsety) + 'px';   
+    }
+    if (circulo){
+      circulo.style.left = (evento.clientX - offsetX) + 'px';
+      circulo.style.top = (evento.clientY - offsety) + 'px';
     }
 
   });
+  
